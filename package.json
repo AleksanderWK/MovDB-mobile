@@ -8,11 +8,19 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@apollo/client": "^3.2.5",
     "expo": "~39.0.2",
     "expo-status-bar": "~1.0.2",
+    "graphql": "^15.4.0",
+    "native-base": "^2.13.14",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+    "react-native-drawer": "^2.5.1",
+    "react-native-infinite-scrolling": "^2.0.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.3",
+    "react-native-keyboard-aware-scrollview": "^2.1.0",
+    "react-native-popup-menu": "^0.15.9",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
@@ -20,6 +28,7 @@
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
+    "@types/react-native-drawer": "^2.5.3",
     "typescript": "~3.9.5"
   },
   "private": true

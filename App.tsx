@@ -1,21 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import {ApolloProvider} from "@apollo/client";
+import {ApolloClient, InMemoryCache, NormalizedCacheObject} from "@apollo/client";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import {StyleProvider} from "native-base";
+import Menu from "./components/Menu/Menu";
+
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    uri: "http://it2810-23.idi.ntnu.no:3000/",
+    cache: new InMemoryCache({
+        typePolicies: {
+            Query: {
+                fields: {
+                    menuValues: {
+                        merge: false
+                    },
+                    menuOpen: {
+                        merge: false
+                    }
+                }
+            }
+        }
+    })
+});
+
+function App() {
+    return (
+        <ApolloProvider client={client}>
+            <Menu />
+        </ApolloProvider>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
