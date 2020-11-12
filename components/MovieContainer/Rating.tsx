@@ -45,7 +45,7 @@ function Rating(props: Props) {
 
     return (
         <Badge style={[styles.badge, ratingColor()]}>
-            <Text style={styles.text}>{props.rating}</Text>
+            <Text style={styles.text}>{props.rating.toFixed(1)}</Text>
         </Badge>
     );
 }
