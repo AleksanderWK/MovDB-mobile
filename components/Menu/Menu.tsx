@@ -1,19 +1,18 @@
 import {useApolloClient, useQuery} from "@apollo/client";
-import {Button, Container, Content, Header, Icon, Input, InputGroup} from "native-base";
+import {Button, Container, Content} from "native-base";
 import React, {useEffect, useState} from "react";
 import Drawer from "react-native-drawer";
 import {MENU_OPEN, MENU_OPTIONS, MENU_VALUES} from "../../queries";
 import Navbar from "../Bars/Navbar";
 import SearchBar from "../Bars/SearchBar";
 import MovieContainer from "../MovieContainer/MovieContainer";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text} from "react-native";
+import Selection from "./Selection";
+import IntervalSlider from "./IntervalSlider";
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#1b1b1b",
-        alignItems: "center",
-        justifyContent: "center"
+        backgroundColor: "#1b1b1b"
     },
     btnConfirm: {
         width: "90%",
@@ -26,7 +25,13 @@ const styles = StyleSheet.create({
     btnReset: {width: "30%", marginLeft: "auto", marginBottom: 15, marginRight: "auto"},
     btnClose: {},
     text: {color: "#ffff"},
-    textRed: {color: "#d9534f"}
+    textRed: {color: "#d9534f"},
+    menuOptionsContainer: {
+        width: "90%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: 15
+    }
 });
 
 export interface Interval {
@@ -132,11 +137,45 @@ function Menu() {
             tapToClose={true}
             content={
                 <Container style={styles.container}>
-                    <Content></Content>
+                    {menuValues && menuOptions && (
+                        <Content style={styles.menuOptionsContainer}>
+                            <Selection
+                                label="genres"
+                                optionValues={menuOptions.genres}
+                                values={menuValues.genres}
+                                onValueChange={(value: string[]) => handleValueChange("genres", value)}
+                            />
+                            <Selection
+                                label="production countries"
+                                optionValues={menuOptions.productionCountries}
+                                values={menuValues.productionCountries}
+                                onValueChange={(value: string[]) => handleValueChange("productionCountries", value)}
+                            />
+                            <IntervalSlider
+                                label="release window"
+                                optionValues={menuOptions.releaseDateInterval}
+                                values={menuValues.releaseDateInterval}
+                                onValueChange={(value: Interval) => handleValueChange("releaseDateInterval", value)}
+                            />
+                            <IntervalSlider
+                                label="runtime"
+                                optionValues={menuOptions.runtimeInterval}
+                                values={menuValues.runtimeInterval}
+                                onValueChange={(value: Interval) => handleValueChange("runtimeInterval", value)}
+                            />
+                        </Content>
+                    )}
+
                     <Button block onPress={toggleDrawer} style={styles.btnConfirm}>
                         <Text style={styles.text}>Confirm</Text>
                     </Button>
-                    <Button block bordered danger style={styles.btnReset}>
+                    <Button
+                        block
+                        onPress={() => setDefaultMenuValues(menuOptionsData.menuOptions)}
+                        bordered
+                        danger
+                        style={styles.btnReset}
+                    >
                         <Text style={styles.textRed}>Reset</Text>
                     </Button>
                 </Container>
