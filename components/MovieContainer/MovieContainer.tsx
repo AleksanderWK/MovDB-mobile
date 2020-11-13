@@ -1,12 +1,34 @@
 import {useQuery} from "@apollo/client";
+import {Content, Item} from "native-base";
 import React, {useEffect, useState} from "react";
-import {ScrollView, View, StyleSheet} from "react-native";
+import {ScrollView, View, StyleSheet, FlatList, ActivityIndicator, Text} from "react-native";
 import {MENU_VALUES, SEARCH, SORT, SORT_DIRECTION, MOVIES} from "../../queries";
 import Movie from "./Movie";
 
 const styles = StyleSheet.create({
+    bg: {
+        backgroundColor: "#101010",
+        flex: 1
+    },
     container: {
+        alignItems: "center"
+    },
+    loader: {
         backgroundColor: "#101010"
+    },
+    feedback: {
+        height: 60,
+        marginTop: 20
+    },
+    danger: {
+        color: "#d9534f",
+        marginLeft: "auto",
+        marginRight: "auto"
+    },
+    endText: {
+        color: "#d4a600",
+        marginLeft: "auto",
+        marginRight: "auto"
     }
 });
 
@@ -130,21 +152,7 @@ function MovieContainer() {
     // On fetch, concatenate already fetched movies with the newly fetched ones
     useEffect(() => {
         if (moviesData) {
-            const moviesArray = moviesData.movies.movies.map((movie: Movie) => (
-                <Movie
-                    key={movie.imdb_id}
-                    imdbID={movie.imdb_id}
-                    rating={movie.rating}
-                    title={movie.original_title}
-                    backgroundImage={posterBaseURL + movie.poster_path}
-                    onPress={(imdbID) => {
-                        setCurrentMovie(imdbID);
-                        setPopupOpen(true);
-                    }}
-                />
-            ));
-
-            setMovies((prevMovies) => prevMovies.concat(moviesArray));
+            setMovies((prevMovies) => prevMovies.concat(moviesData.movies.movies));
             setPageCount(moviesData.movies.pageCount);
             setPageLoaded(true);
         }
@@ -158,7 +166,57 @@ function MovieContainer() {
         }
     };
 
-    return <ScrollView style={styles.container}>{movies}</ScrollView>;
+    const renderItem = ({item}: {item: Movie}) => {
+        return (
+            <Movie
+                key={item.imdb_id}
+                imdbID={item.imdb_id}
+                rating={item.rating}
+                title={item.original_title}
+                backgroundImage={posterBaseURL + item.poster_path}
+                onPress={(imdbID) => {
+                    setCurrentMovie(imdbID);
+                    setPopupOpen(true);
+                }}
+            />
+        );
+    };
+
+    return (
+        <Content style={styles.bg} contentContainerStyle={{flex: 1}}>
+            {movies && movies.length !== 0 ? (
+                // Movies
+                <FlatList
+                    data={movies}
+                    renderItem={renderItem}
+                    extraData={currentPage < pageCount}
+                    onEndReached={nextPage}
+                    numColumns={2}
+                    ListFooterComponent={
+                        <View style={styles.feedback}>
+                            {queryLoading && <ActivityIndicator size="large" color="#d4a600" style={styles.loader} />}
+                            {!queryLoading && pageLoaded && pageCount !== 0 && movies.length > 0 && (
+                                <Text style={styles.endText}>
+                                    {movies.length} {movies.length === 1 ? "RESULT" : "RESULTS"}
+                                </Text>
+                            )}
+                        </View>
+                    }
+                    contentContainerStyle={styles.container}
+                />
+            ) : moviesData && moviesData.movies.movies.length === 0 ? (
+                // No results
+                <View style={styles.feedback}>
+                    <Text style={styles.danger}>NO RESULTS</Text>
+                </View>
+            ) : (
+                // Loading
+                <View style={styles.feedback}>
+                    {queryLoading && <ActivityIndicator size="large" color="#d4a600" style={styles.loader} />}
+                </View>
+            )}
+        </Content>
+    );
 }
 
 export default MovieContainer;
