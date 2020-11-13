@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {ScrollView, View, StyleSheet, FlatList, ActivityIndicator, Text} from "react-native";
 import {MENU_VALUES, SEARCH, SORT, SORT_DIRECTION, MOVIES} from "../../queries";
 import Movie from "./Movie";
+import MoviePopup from "./MoviePopup";
 
 const styles = StyleSheet.create({
     bg: {
@@ -184,6 +185,7 @@ function MovieContainer() {
 
     return (
         <Content style={styles.bg} contentContainerStyle={{flex: 1}}>
+            <MoviePopup movieId={currentMovie} open={popupOpen} handlePopupClose={() => setPopupOpen(false)} />
             {movies && movies.length !== 0 ? (
                 // Movies
                 <FlatList
