@@ -14,8 +14,21 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     loader: {
-        backgroundColor: "#101010",
-        margin: 15
+        backgroundColor: "#101010"
+    },
+    feedback: {
+        height: 60,
+        marginTop: 20
+    },
+    danger: {
+        color: "#d9534f",
+        marginLeft: "auto",
+        marginRight: "auto"
+    },
+    endText: {
+        color: "#d4a600",
+        marginLeft: "auto",
+        marginRight: "auto"
     }
 });
 
@@ -171,15 +184,37 @@ function MovieContainer() {
 
     return (
         <Content style={styles.bg} contentContainerStyle={{flex: 1}}>
-            <FlatList
-                data={movies}
-                renderItem={renderItem}
-                extraData={currentPage < pageCount}
-                onEndReached={nextPage}
-                numColumns={2}
-                contentContainerStyle={styles.container}
-            />
-            {queryLoading && <ActivityIndicator size="large" color="#d4a600" style={styles.loader} />}
+            {movies && movies.length !== 0 ? (
+                // Movies
+                <FlatList
+                    data={movies}
+                    renderItem={renderItem}
+                    extraData={currentPage < pageCount}
+                    onEndReached={nextPage}
+                    numColumns={2}
+                    ListFooterComponent={
+                        <View style={styles.feedback}>
+                            {queryLoading && <ActivityIndicator size="large" color="#d4a600" style={styles.loader} />}
+                            {!queryLoading && pageLoaded && pageCount !== 0 && movies.length > 0 && (
+                                <Text style={styles.endText}>
+                                    {movies.length} {movies.length === 1 ? "RESULT" : "RESULTS"}
+                                </Text>
+                            )}
+                        </View>
+                    }
+                    contentContainerStyle={styles.container}
+                />
+            ) : moviesData && moviesData.movies.movies.length === 0 ? (
+                // No results
+                <View style={styles.feedback}>
+                    <Text style={styles.danger}>NO RESULTS</Text>
+                </View>
+            ) : (
+                // Loading
+                <View style={styles.feedback}>
+                    {queryLoading && <ActivityIndicator size="large" color="#d4a600" style={styles.loader} />}
+                </View>
+            )}
         </Content>
     );
 }
