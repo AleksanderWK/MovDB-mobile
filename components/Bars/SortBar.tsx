@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {ImageBackground, StyleSheet, Text, View, Modal} from "react-native";
+import {ImageBackground, StyleSheet, Text, View} from "react-native";
+import Modal from "react-native-modal";
 import {Button, Col, Container, Content, Grid, Header, Icon, Input, InputGroup} from "native-base";
 import {useApolloClient, useQuery} from "@apollo/client";
 import {SEARCH, SORT, SORT_DIRECTION} from "../../queries";
@@ -10,8 +11,9 @@ const styles = StyleSheet.create({
         height: 250,
         backgroundColor: "#1b1b1b",
         position: "absolute",
-        bottom: 0,
-        zIndex: 1
+        bottom: -20,
+        borderTopEndRadius: 10,
+        borderTopLeftRadius: 10
     },
     btnClose: {
         margin: 5,
@@ -21,7 +23,7 @@ const styles = StyleSheet.create({
         right: 0
     },
     grid: {
-        marginTop: 45
+        marginTop: 30
     },
     col: {
         height: "100%",
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
     },
     btnOption: {
         backgroundColor: "#424242",
-        marginBottom: 2
+        marginBottom: 4
     },
     btnSelected: {
         backgroundColor: "#d4a600"
@@ -39,6 +41,15 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginLeft: 0
+    },
+    handle: {
+        width: "20%",
+        height: 5,
+        backgroundColor: "rgba(66, 66, 66, 0.9)",
+        position: "absolute",
+        bottom: 255,
+        alignSelf: "center",
+        borderRadius: 2.5
     }
 });
 
@@ -107,94 +118,101 @@ function SortBar(props: Props) {
     };
 
     return (
-        <Modal animationType="slide" transparent={true} visible={props.visible}>
+        <Modal
+            isVisible={props.visible}
+            swipeDirection="down"
+            animationIn="bounceInUp"
+            animationInTiming={800}
+            onSwipeComplete={() => {
+                props.toggleVisible(false);
+            }}
+            hideModalContentWhileAnimating={true}
+            style={{width: "100%", marginLeft: 0}}
+        >
             <View style={styles.sortbar}>
-                <Button
-                    vertical
-                    style={styles.btnClose}
-                    onPress={() => {
-                        props.toggleVisible(false);
-                    }}
-                >
-                    <Icon name={"close"} />
-                </Button>
-
-                <Grid style={styles.grid}>
-                    <Col style={styles.col}>
-                        <Content>
-                            <Button
-                                style={sort === "rating" ? [styles.btnOption, styles.btnSelected] : [styles.btnOption]}
-                                block
-                                onPress={() => handleSortByClick("rating")}
-                            >
-                                <Icon name="star" style={styles.icon} />
-                                <Text style={styles.text}>Rating</Text>
-                            </Button>
-                            <Button
-                                style={
-                                    sort === "original_title"
-                                        ? [styles.btnOption, styles.btnSelected]
-                                        : [styles.btnOption]
-                                }
-                                block
-                                onPress={() => handleSortByClick("original_title")}
-                            >
-                                <Icon name="book" style={styles.icon} />
-                                <Text style={styles.text}>Original title</Text>
-                            </Button>
-                            <Button
-                                style={sort === "runtime" ? [styles.btnOption, styles.btnSelected] : [styles.btnOption]}
-                                block
-                                onPress={() => handleSortByClick("runtime")}
-                            >
-                                <Icon name="stopwatch" style={styles.icon} />
-                                <Text style={styles.text}>Runtime</Text>
-                            </Button>
-                            <Button
-                                style={
-                                    sort === "release_date"
-                                        ? [styles.btnOption, styles.btnSelected]
-                                        : [styles.btnOption]
-                                }
-                                onPress={() => handleSortByClick("release_date")}
-                                block
-                            >
-                                <Icon name="calendar" style={styles.icon} />
-                                <Text style={styles.text}>Release date</Text>
-                            </Button>
-                        </Content>
-                    </Col>
-                    <Col style={styles.col}>
-                        <Content>
-                            <Button
-                                style={
-                                    sortDirection === "ASC"
-                                        ? [styles.btnOption, styles.btnSelected]
-                                        : [styles.btnOption]
-                                }
-                                onPress={() => handleSortDirectionClick("ASC")}
-                                disabled={sort === "none"}
-                                block
-                            >
-                                <Icon name="arrow-up" style={styles.icon} />
-                                <Text style={styles.text}>ASC</Text>
-                            </Button>
-                            <Button
-                                style={
-                                    sortDirection === "DESC"
-                                        ? [styles.btnOption, styles.btnSelected]
-                                        : [styles.btnOption]
-                                }
-                                onPress={() => handleSortDirectionClick("DESC")}
-                                disabled={sort === "none"}
-                                block
-                            >
-                                <Icon name="arrow-down" style={styles.icon} />
-                                <Text style={styles.text}>DESC</Text>
-                            </Button>
-                        </Content>
-                    </Col>
-                </Grid>
+                <View style={styles.handle}></View>
+                <View>
+                    <Grid style={styles.grid}>
+                        <Col style={styles.col}>
+                            <View>
+                                <Button
+                                    style={
+                                        sort === "rating" ? [styles.btnOption, styles.btnSelected] : [styles.btnOption]
+                                    }
+                                    block
+                                    onPress={() => handleSortByClick("rating")}
+                                >
+                                    <Icon name="star" style={styles.icon} />
+                                    <Text style={styles.text}>Rating</Text>
+                                </Button>
+                                <Button
+                                    style={
+                                        sort === "original_title"
+                                            ? [styles.btnOption, styles.btnSelected]
+                                            : [styles.btnOption]
+                                    }
+                                    block
+                                    onPress={() => handleSortByClick("original_title")}
+                                >
+                                    <Icon name="book" style={styles.icon} />
+                                    <Text style={styles.text}>Original title</Text>
+                                </Button>
+                                <Button
+                                    style={
+                                        sort === "runtime" ? [styles.btnOption, styles.btnSelected] : [styles.btnOption]
+                                    }
+                                    block
+                                    onPress={() => handleSortByClick("runtime")}
+                                >
+                                    <Icon name="stopwatch" style={styles.icon} />
+                                    <Text style={styles.text}>Runtime</Text>
+                                </Button>
+                                <Button
+                                    style={
+                                        sort === "release_date"
+                                            ? [styles.btnOption, styles.btnSelected]
+                                            : [styles.btnOption]
+                                    }
+                                    onPress={() => handleSortByClick("release_date")}
+                                    block
+                                >
+                                    <Icon name="calendar" style={styles.icon} />
+                                    <Text style={styles.text}>Release date</Text>
+                                </Button>
+                            </View>
+                        </Col>
+                        <Col style={styles.col}>
+                            <View>
+                                <Button
+                                    style={
+                                        sortDirection === "ASC"
+                                            ? [styles.btnOption, styles.btnSelected]
+                                            : [styles.btnOption]
+                                    }
+                                    onPress={() => handleSortDirectionClick("ASC")}
+                                    disabled={sort === "none"}
+                                    block
+                                >
+                                    <Icon name="arrow-up" style={styles.icon} />
+                                    <Text style={styles.text}>ASC</Text>
+                                </Button>
+                                <Button
+                                    style={
+                                        sortDirection === "DESC"
+                                            ? [styles.btnOption, styles.btnSelected]
+                                            : [styles.btnOption]
+                                    }
+                                    onPress={() => handleSortDirectionClick("DESC")}
+                                    disabled={sort === "none"}
+                                    block
+                                >
+                                    <Icon name="arrow-down" style={styles.icon} />
+                                    <Text style={styles.text}>DESC</Text>
+                                </Button>
+                            </View>
+                        </Col>
+                    </Grid>
+                </View>
             </View>
         </Modal>
     );
