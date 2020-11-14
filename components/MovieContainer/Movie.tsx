@@ -34,7 +34,6 @@ function Movie(props: Props) {
     return (
         <Card style={styles.card}>
             <TouchableHighlight
-                //onPressIn={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}
                 onPressOut={() => {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                 }}
