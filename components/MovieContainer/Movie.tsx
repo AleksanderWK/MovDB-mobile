@@ -1,9 +1,8 @@
-import {StatusBar} from "expo-status-bar";
-import React, {useEffect, useState} from "react";
-import {StyleSheet, View, Image, ImageSourcePropType} from "react-native";
-import {useQuery} from "@apollo/client";
-import {MOVIE_DATA} from "../../queries";
-import {Card, CardItem, Icon, Text} from "native-base";
+import React from "react";
+import {StyleSheet, Image, TouchableHighlight} from "react-native";
+import * as Haptics from "expo-haptics";
+
+import {Card} from "native-base";
 import Rating from "./Rating";
 
 const styles = StyleSheet.create({
@@ -31,14 +30,19 @@ interface Props {
 }
 
 function Movie(props: Props) {
+    Haptics.NotificationFeedbackType.Success;
     return (
-        <Card
-            style={styles.card}
-            onTouchStart={() => {
-                props.onPress(props.imdbID);
-            }}
-        >
-            <Image style={styles.poster} source={{uri: props.backgroundImage}} />
+        <Card style={styles.card}>
+            <TouchableHighlight
+                onPressOut={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                }}
+                onPress={() => {
+                    props.onPress(props.imdbID);
+                }}
+            >
+                <Image style={styles.poster} source={{uri: props.backgroundImage}} />
+            </TouchableHighlight>
             <Rating rating={props.rating} />
         </Card>
     );
