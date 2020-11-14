@@ -1,16 +1,20 @@
 import React from "react";
-import {Badge} from "native-base";
-import {Text, StyleSheet} from "react-native";
+import {Text, StyleSheet, View} from "react-native";
 
 const styles = StyleSheet.create({
     badge: {
         position: "absolute",
         bottom: 0,
         right: 0,
-        margin: 2
+        margin: 2,
+        width: 30,
+        height: 20,
+        borderRadius: 5,
+        justifyContent: "center"
     },
     text: {
-        color: "#fff"
+        color: "#fff",
+        alignSelf: "center"
     }
 });
 
@@ -44,9 +48,9 @@ function Rating(props: Props) {
     };
 
     return (
-        <Badge style={[styles.badge, ratingColor()]}>
+        <View style={[styles.badge, ratingColor()]}>
             <Text style={styles.text}>{props.rating.toFixed(1)}</Text>
-        </Badge>
+        </View>
     );
 }
 
