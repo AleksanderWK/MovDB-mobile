@@ -121,6 +121,8 @@ function SortBar(props: Props) {
         <Modal
             isVisible={props.visible}
             swipeDirection="down"
+            animationIn="bounceInUp"
+            animationInTiming={800}
             onSwipeComplete={() => {
                 props.toggleVisible(false);
             }}
