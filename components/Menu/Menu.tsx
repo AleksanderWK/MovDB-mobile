@@ -9,6 +9,7 @@ import MovieContainer from "../MovieContainer/MovieContainer";
 import {StyleSheet, Text} from "react-native";
 import Selection from "./Selection";
 import IntervalSlider from "./IntervalSlider";
+import Modal from "react-native-modal";
 
 const styles = StyleSheet.create({
     container: {
@@ -130,63 +131,56 @@ function Menu() {
     };
 
     return (
-        <Drawer
-            type="overlay"
-            open={menuOpen}
-            side="right"
-            tapToClose={true}
-            content={
-                <Container style={styles.container}>
-                    {menuValues && menuOptions && (
-                        <Content style={styles.menuOptionsContainer}>
-                            <Selection
-                                label="genres"
-                                optionValues={menuOptions.genres}
-                                values={menuValues.genres}
-                                onValueChange={(value: string[]) => handleValueChange("genres", value)}
-                            />
-                            <Selection
-                                label="production countries"
-                                optionValues={menuOptions.productionCountries}
-                                values={menuValues.productionCountries}
-                                onValueChange={(value: string[]) => handleValueChange("productionCountries", value)}
-                            />
-                            <IntervalSlider
-                                label="release window"
-                                optionValues={menuOptions.releaseDateInterval}
-                                values={menuValues.releaseDateInterval}
-                                onValueChange={(value: Interval) => handleValueChange("releaseDateInterval", value)}
-                            />
-                            <IntervalSlider
-                                label="runtime"
-                                optionValues={menuOptions.runtimeInterval}
-                                values={menuValues.runtimeInterval}
-                                onValueChange={(value: Interval) => handleValueChange("runtimeInterval", value)}
-                            />
-                        </Content>
-                    )}
-
-                    <Button block onPress={toggleDrawer} style={styles.btnConfirm}>
-                        <Text style={styles.text}>Confirm</Text>
-                    </Button>
-                    <Button
-                        block
-                        onPress={() => setDefaultMenuValues(menuOptionsData.menuOptions)}
-                        bordered
-                        danger
-                        style={styles.btnReset}
-                    >
-                        <Text style={styles.textRed}>Reset</Text>
-                    </Button>
-                </Container>
-            }
+        <Modal
+            style={{margin: 0}}
+            isVisible={menuOpen}
+            hideModalContentWhileAnimating
+            animationIn="slideInRight"
+            animationOut="slideOutRight"
         >
-            <Container>
-                <SearchBar />
-                <MovieContainer />
-                <Navbar />
+            <Container style={styles.container}>
+                {menuValues && menuOptions && (
+                    <Content style={styles.menuOptionsContainer}>
+                        <Selection
+                            label="genres"
+                            optionValues={menuOptions.genres}
+                            values={menuValues.genres}
+                            onValueChange={(value: string[]) => handleValueChange("genres", value)}
+                        />
+                        <Selection
+                            label="production countries"
+                            optionValues={menuOptions.productionCountries}
+                            values={menuValues.productionCountries}
+                            onValueChange={(value: string[]) => handleValueChange("productionCountries", value)}
+                        />
+                        <IntervalSlider
+                            label="release window"
+                            optionValues={menuOptions.releaseDateInterval}
+                            values={menuValues.releaseDateInterval}
+                            onValueChange={(value: Interval) => handleValueChange("releaseDateInterval", value)}
+                        />
+                        <IntervalSlider
+                            label="runtime"
+                            optionValues={menuOptions.runtimeInterval}
+                            values={menuValues.runtimeInterval}
+                            onValueChange={(value: Interval) => handleValueChange("runtimeInterval", value)}
+                        />
+                    </Content>
+                )}
+                <Button block onPress={toggleDrawer} style={styles.btnConfirm}>
+                    <Text style={styles.text}>Confirm</Text>
+                </Button>
+                <Button
+                    block
+                    onPress={() => setDefaultMenuValues(menuOptionsData.menuOptions)}
+                    bordered
+                    danger
+                    style={styles.btnReset}
+                >
+                    <Text style={styles.textRed}>Reset</Text>
+                </Button>
             </Container>
-        </Drawer>
+        </Modal>
     );
 }
 
