@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
     badge: {
         backgroundColor: "#d4a600",
-        marginRight: 3
+        margin: 3
     },
     badgesContainer: {
         display: "flex",

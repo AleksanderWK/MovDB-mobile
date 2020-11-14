@@ -1,7 +1,7 @@
 import {useQuery} from "@apollo/client";
-import {Content, Item} from "native-base";
+import {Content} from "native-base";
 import React, {useEffect, useState} from "react";
-import {ScrollView, View, StyleSheet, FlatList, ActivityIndicator, Text} from "react-native";
+import {View, StyleSheet, FlatList, ActivityIndicator, Text} from "react-native";
 import {MENU_VALUES, SEARCH, SORT, SORT_DIRECTION, MOVIES} from "../../queries";
 import Movie from "./Movie";
 import MoviePopup from "./MoviePopup";
@@ -185,7 +185,12 @@ function MovieContainer() {
 
     return (
         <Content style={styles.bg} contentContainerStyle={{flex: 1}}>
-            <MoviePopup movieId={currentMovie} open={popupOpen} handlePopupClose={() => setPopupOpen(false)} />
+            <MoviePopup
+                key={currentMovie}
+                movieId={currentMovie}
+                open={popupOpen}
+                handlePopupClose={() => setPopupOpen(false)}
+            />
             {movies && movies.length !== 0 ? (
                 // Movies
                 <FlatList

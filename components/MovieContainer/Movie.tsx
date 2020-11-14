@@ -1,5 +1,6 @@
 import React from "react";
 import {StyleSheet, Image, TouchableHighlight} from "react-native";
+import * as Haptics from "expo-haptics";
 
 import {Card} from "native-base";
 import Rating from "./Rating";
@@ -29,9 +30,14 @@ interface Props {
 }
 
 function Movie(props: Props) {
+    Haptics.NotificationFeedbackType.Success;
     return (
         <Card style={styles.card}>
             <TouchableHighlight
+                //onPressIn={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}
+                onPressOut={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                }}
                 onPress={() => {
                     props.onPress(props.imdbID);
                 }}
