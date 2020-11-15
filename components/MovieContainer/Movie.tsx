@@ -1,7 +1,6 @@
 import React from "react";
 import {StyleSheet, Image, TouchableHighlight} from "react-native";
 import * as Haptics from "expo-haptics";
-
 import {Card} from "native-base";
 import Rating from "./Rating";
 
@@ -34,11 +33,9 @@ function Movie(props: Props) {
     return (
         <Card style={styles.card}>
             <TouchableHighlight
-                onPressOut={() => {
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-                }}
                 onPress={() => {
                     props.onPress(props.imdbID);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                 }}
             >
                 <Image style={styles.poster} source={{uri: props.backgroundImage}} />

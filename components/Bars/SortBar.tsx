@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {ImageBackground, StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import Modal from "react-native-modal";
-import {Button, Col, Container, Content, Grid, Header, Icon, Input, InputGroup} from "native-base";
+import {Button, Col, Grid, Icon} from "native-base";
 import {useApolloClient, useQuery} from "@apollo/client";
 import {SEARCH, SORT, SORT_DIRECTION} from "../../queries";
+import * as Haptics from "expo-haptics";
 
 const styles = StyleSheet.create({
     sortbar: {
@@ -117,6 +118,8 @@ function SortBar(props: Props) {
         }
     };
 
+    Haptics.NotificationFeedbackType.Success;
+
     return (
         <Modal
             isVisible={props.visible}
@@ -140,7 +143,10 @@ function SortBar(props: Props) {
                                         sort === "rating" ? [styles.btnOption, styles.btnSelected] : [styles.btnOption]
                                     }
                                     block
-                                    onPress={() => handleSortByClick("rating")}
+                                    onPress={() => {
+                                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                        handleSortByClick("rating");
+                                    }}
                                 >
                                     <Icon name="star" style={styles.icon} />
                                     <Text style={styles.text}>Rating</Text>
@@ -152,7 +158,10 @@ function SortBar(props: Props) {
                                             : [styles.btnOption]
                                     }
                                     block
-                                    onPress={() => handleSortByClick("original_title")}
+                                    onPress={() => {
+                                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                        handleSortByClick("original_title");
+                                    }}
                                 >
                                     <Icon name="book" style={styles.icon} />
                                     <Text style={styles.text}>Original title</Text>
@@ -162,7 +171,10 @@ function SortBar(props: Props) {
                                         sort === "runtime" ? [styles.btnOption, styles.btnSelected] : [styles.btnOption]
                                     }
                                     block
-                                    onPress={() => handleSortByClick("runtime")}
+                                    onPress={() => {
+                                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                        handleSortByClick("runtime");
+                                    }}
                                 >
                                     <Icon name="stopwatch" style={styles.icon} />
                                     <Text style={styles.text}>Runtime</Text>
@@ -173,7 +185,10 @@ function SortBar(props: Props) {
                                             ? [styles.btnOption, styles.btnSelected]
                                             : [styles.btnOption]
                                     }
-                                    onPress={() => handleSortByClick("release_date")}
+                                    onPress={() => {
+                                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                        handleSortByClick("release_date");
+                                    }}
                                     block
                                 >
                                     <Icon name="calendar" style={styles.icon} />
@@ -189,7 +204,10 @@ function SortBar(props: Props) {
                                             ? [styles.btnOption, styles.btnSelected]
                                             : [styles.btnOption]
                                     }
-                                    onPress={() => handleSortDirectionClick("ASC")}
+                                    onPress={() => {
+                                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                        handleSortDirectionClick("ASC");
+                                    }}
                                     disabled={sort === "none"}
                                     block
                                 >
@@ -202,7 +220,10 @@ function SortBar(props: Props) {
                                             ? [styles.btnOption, styles.btnSelected]
                                             : [styles.btnOption]
                                     }
-                                    onPress={() => handleSortDirectionClick("DESC")}
+                                    onPress={() => {
+                                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                        handleSortDirectionClick("DESC");
+                                    }}
                                     disabled={sort === "none"}
                                     block
                                 >

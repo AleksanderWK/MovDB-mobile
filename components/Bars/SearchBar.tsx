@@ -3,6 +3,7 @@ import {StyleSheet, Text, Keyboard} from "react-native";
 import {Button, Header, Icon, Input, InputGroup} from "native-base";
 import {useApolloClient} from "@apollo/client";
 import {SEARCH} from "../../queries";
+import * as Haptics from "expo-haptics";
 
 const styles = StyleSheet.create({
     header: {
@@ -42,6 +43,8 @@ const styles = StyleSheet.create({
 });
 
 function SearchBar() {
+    Haptics.NotificationFeedbackType.Success;
+
     const client = useApolloClient();
     const [search, setSearch] = useState<string>("");
 
@@ -57,6 +60,7 @@ function SearchBar() {
 
     // On submit, write the search text to cache
     const handleSubmit = () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         Keyboard.dismiss();
         client.cache.writeQuery({
             query: SEARCH,
@@ -78,7 +82,9 @@ function SearchBar() {
                 <Input
                     style={styles.input}
                     placeholder="Search movies..."
-                    onChangeText={(value: string) => handleChange(value)}
+                    onChangeText={(value: string) => {
+                        handleChange(value);
+                    }}
                     keyboardAppearance="dark"
                     clearButtonMode="always"
                 />
