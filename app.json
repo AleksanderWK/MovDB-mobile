@@ -1,32 +1,30 @@
 {
-  "expo": {
-    "name": "movDB",
-    "slug": "movDB",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "expo": {
+        "name": "MovDB",
+        "slug": "MovDB",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/logo512.png",
+        "splash": {
+            "image": "./assets/movDBsplash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#101010"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": false
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/logo512.png",
+                "backgroundColor": "#101010"
+            }
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        }
     }
-  }
 }
