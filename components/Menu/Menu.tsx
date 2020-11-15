@@ -1,15 +1,12 @@
 import {useApolloClient, useQuery} from "@apollo/client";
 import {Button, Container, Content} from "native-base";
 import React, {useEffect, useState} from "react";
-import Drawer from "react-native-drawer";
 import {MENU_OPEN, MENU_OPTIONS, MENU_VALUES} from "../../queries";
-import Navbar from "../Bars/Navbar";
-import SearchBar from "../Bars/SearchBar";
-import MovieContainer from "../MovieContainer/MovieContainer";
 import {StyleSheet, Text} from "react-native";
 import Selection from "./Selection";
 import IntervalSlider from "./IntervalSlider";
 import Modal from "react-native-modal";
+import * as Haptics from "expo-haptics";
 
 const styles = StyleSheet.create({
     container: {
@@ -130,6 +127,8 @@ function Menu() {
         setMenuValues(updatedMenuValues);
     };
 
+    Haptics.NotificationFeedbackType.Success;
+
     return (
         <Modal
             style={{margin: 0}}
@@ -158,7 +157,7 @@ function Menu() {
                             optionValues={menuOptions.releaseDateInterval}
                             values={menuValues.releaseDateInterval}
                             onValueChange={(value: Interval) => handleValueChange("releaseDateInterval", value)}
-                            suffix={""}
+                            feedback={true}
                         />
                         <IntervalSlider
                             label="runtime"
@@ -169,12 +168,22 @@ function Menu() {
                         />
                     </Content>
                 )}
-                <Button block onPress={toggleDrawer} style={styles.btnConfirm}>
+                <Button
+                    block
+                    onPress={() => {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                        toggleDrawer();
+                    }}
+                    style={styles.btnConfirm}
+                >
                     <Text style={styles.text}>Confirm</Text>
                 </Button>
                 <Button
                     block
-                    onPress={() => setDefaultMenuValues(menuOptionsData.menuOptions)}
+                    onPress={() => {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                        setDefaultMenuValues(menuOptionsData.menuOptions);
+                    }}
                     bordered
                     danger
                     style={styles.btnReset}

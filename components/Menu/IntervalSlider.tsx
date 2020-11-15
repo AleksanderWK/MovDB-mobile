@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Interval} from "./Menu";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import {StyleSheet, View, Text} from "react-native";
+import * as Haptics from "expo-haptics";
 
 const styles = StyleSheet.create({
     select: {
@@ -35,11 +36,13 @@ export interface Props {
     optionValues: Interval;
     onValueChange: (value: Interval) => void;
     values: Interval;
-    suffix: string;
+    suffix?: string;
+    feedback?: boolean;
 }
 
 function IntervalSlider(props: Props) {
     const [value, setValue] = useState<Interval>(props.values);
+    const [currentValue, setCurrentValue] = useState<Interval>(props.values);
 
     // Update internal state when values prop changes
     useEffect(() => {
@@ -50,7 +53,7 @@ function IntervalSlider(props: Props) {
     const handleChange = (interval: Interval) => {
         setValue(interval);
     };
-
+    Haptics.NotificationFeedbackType.Success;
     return (
         <View style={styles.select}>
             <Text style={styles.header}>Select {props.label}</Text>
@@ -59,6 +62,12 @@ function IntervalSlider(props: Props) {
                 min={props.optionValues.start}
                 max={props.optionValues.end}
                 allowOverlap
+                onValuesChange={(value) => {
+                    setCurrentValue({start: value[0], end: value[1]});
+                    if (props.feedback) {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    }
+                }}
                 onValuesChangeFinish={(value) => {
                     let v: Interval = {start: value[0], end: value[1]};
                     handleChange(v);
@@ -69,14 +78,22 @@ function IntervalSlider(props: Props) {
                 containerStyle={styles.container}
                 trackStyle={styles.track}
             />
-            <View style={styles.values}>
-                <Text style={styles.text}>
-                    {value.start} {props.suffix}
-                </Text>
-                <Text style={styles.text}>
-                    {value.end} {props.suffix}
-                </Text>
-            </View>
+
+            {props.suffix !== undefined ? (
+                <View style={styles.values}>
+                    <Text style={styles.text}>
+                        {currentValue.start} {props.suffix}
+                    </Text>
+                    <Text style={styles.text}>
+                        {currentValue.end} {props.suffix}
+                    </Text>
+                </View>
+            ) : (
+                <View style={styles.values}>
+                    <Text style={styles.text}>{currentValue.start}</Text>
+                    <Text style={styles.text}>{currentValue.end}</Text>
+                </View>
+            )}
         </View>
     );
 }

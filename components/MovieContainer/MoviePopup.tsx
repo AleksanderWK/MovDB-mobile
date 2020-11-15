@@ -4,6 +4,7 @@ import {useQuery} from "@apollo/client";
 import React, {useState, useEffect} from "react";
 import {MOVIE_DATA} from "../../queries";
 import {Badge} from "native-base";
+import {Filter} from "./MovieContainer";
 
 const styles = StyleSheet.create({
     dialog: {
@@ -28,9 +29,15 @@ const styles = StyleSheet.create({
         marginBottom: 3
     },
     badge: {
-        backgroundColor: "#d4a600",
-        margin: 3
+        margin: 3,
+        backgroundColor: "rgba(0,0,0,0)",
+        borderWidth: 2,
+        borderColor: "#d4a600"
     },
+    badgeFiltered: {
+        backgroundColor: "#d4a600"
+    },
+    badgeNotFiltered: {},
     badgesContainer: {
         display: "flex",
         flexDirection: "row",
@@ -49,6 +56,7 @@ interface Props {
     movieId: string;
     open: boolean;
     handlePopupClose: () => void;
+    filter: Filter;
 }
 interface ProductionCountry {
     name: string;
@@ -137,15 +145,29 @@ function MoviePopup(props: Props) {
                             </Text>
                             <View style={[styles.badgesContainer, {marginBottom: 3}]}>
                                 {movieData.production_countries.map((list) => (
-                                    <Badge style={styles.badge}>
-                                        <Text>{list.name}</Text>
+                                    <Badge
+                                        style={[
+                                            styles.badge,
+                                            props.filter.production_countries.indexOf(list.name) !== -1
+                                                ? styles.badgeFiltered
+                                                : styles.badgeNotFiltered
+                                        ]}
+                                    >
+                                        <Text style={styles.text}>{list.name}</Text>
                                     </Badge>
                                 ))}
                             </View>
                             <View style={styles.badgesContainer}>
                                 {movieData.genres.map((list) => (
-                                    <Badge style={[styles.badge, {backgroundColor: "#fff"}]}>
-                                        <Text>{list}</Text>
+                                    <Badge
+                                        style={[
+                                            styles.badge,
+                                            props.filter.genres.indexOf(list) !== -1
+                                                ? styles.badgeFiltered
+                                                : styles.badgeNotFiltered
+                                        ]}
+                                    >
+                                        <Text style={styles.text}>{list}</Text>
                                     </Badge>
                                 ))}
                             </View>

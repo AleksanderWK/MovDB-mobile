@@ -57,7 +57,7 @@ interface Options {
     sortDirection: string;
 }
 
-interface Filter {
+export interface Filter {
     genres: [string];
     production_countries: [string];
     release_date: Interval;
@@ -185,12 +185,16 @@ function MovieContainer() {
 
     return (
         <Content style={styles.bg} contentContainerStyle={{flex: 1}}>
-            <MoviePopup
-                key={currentMovie}
-                movieId={currentMovie}
-                open={popupOpen}
-                handlePopupClose={() => setPopupOpen(false)}
-            />
+            {variables && (
+                <MoviePopup
+                    key={currentMovie}
+                    movieId={currentMovie}
+                    open={popupOpen}
+                    handlePopupClose={() => setPopupOpen(false)}
+                    filter={variables.filter}
+                />
+            )}
+
             {movies && movies.length !== 0 ? (
                 // Movies
                 <FlatList

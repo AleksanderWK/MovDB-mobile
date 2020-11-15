@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {StyleSheet, Text, View} from "react-native";
 // @ts-ignore
 import ReactChipsInput from "react-native-chips";
+import * as Haptics from "expo-haptics";
 
 const styles = StyleSheet.create({
     select: {},
@@ -38,12 +39,15 @@ export interface Props {
 }
 
 function Selection(props: Props) {
+    Haptics.NotificationFeedbackType.Success;
+
     return (
         <View style={styles.select}>
             <ReactChipsInput
                 label={"Select " + props.label}
                 initialChips={props.values}
                 onChangeChips={(chips: string[]) => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     props.onValueChange(chips);
                 }}
                 chipStyle={styles.chip}
