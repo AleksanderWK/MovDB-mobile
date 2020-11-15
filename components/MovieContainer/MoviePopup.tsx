@@ -1,10 +1,9 @@
-import Dialog, {DialogContent, DialogFooter, DialogTitle, ScaleAnimation} from "react-native-popup-dialog";
+import Dialog, {ScaleAnimation} from "react-native-popup-dialog";
 import {StyleSheet, View, ScrollView, Text} from "react-native";
 import {useQuery} from "@apollo/client";
 import React, {useState, useEffect} from "react";
 import {MOVIE_DATA} from "../../queries";
-import {Badge, Button, Icon} from "native-base";
-import Rating from "./Rating";
+import {Badge} from "native-base";
 
 const styles = StyleSheet.create({
     dialog: {
@@ -40,6 +39,9 @@ const styles = StyleSheet.create({
     btnClose: {
         margin: 5,
         backgroundColor: "rgba(52, 52, 52, 0)"
+    },
+    overview: {
+        height: 110
     }
 });
 
@@ -107,7 +109,9 @@ function MoviePopup(props: Props) {
                     rounded
                 >
                     <View>
-                        <Text style={[styles.text, {marginLeft: 10, marginRight: 10}]}>{movieData.overview}</Text>
+                        <ScrollView style={styles.overview}>
+                            <Text style={[styles.text, {marginLeft: 10, marginRight: 10}]}>{movieData.overview}</Text>
+                        </ScrollView>
 
                         <View
                             style={{
@@ -118,7 +122,7 @@ function MoviePopup(props: Props) {
                         >
                             <Text style={[styles.text, {marginTop: 3}]}>
                                 <Text style={{fontWeight: "bold"}}>Rating: </Text>
-                                <Text>{movieData.rating}</Text>
+                                <Text>{movieData.rating.toFixed(1)}/10</Text>
                             </Text>
                             <Text style={styles.text}>
                                 <Text style={{fontWeight: "bold"}}>Runtime: </Text>
