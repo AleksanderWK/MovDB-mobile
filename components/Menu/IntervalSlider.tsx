@@ -5,12 +5,6 @@ import {StyleSheet, View, Text} from "react-native";
 
 const styles = StyleSheet.create({
     select: {
-        /*
-        borderStyle: "solid",
-        borderColor: "#d4a600",
-        borderWidth: 1,
-        borderRadius: 3,
-        */
         marginTop: 20,
 
         display: "flex",
@@ -41,7 +35,7 @@ export interface Props {
     optionValues: Interval;
     onValueChange: (value: Interval) => void;
     values: Interval;
-    prefix: string;
+    suffix: string;
 }
 
 function IntervalSlider(props: Props) {
@@ -77,10 +71,10 @@ function IntervalSlider(props: Props) {
             />
             <View style={styles.values}>
                 <Text style={styles.text}>
-                    {value.start} {props.prefix}
+                    {value.start} {props.suffix}
                 </Text>
                 <Text style={styles.text}>
-                    {value.end} {props.prefix}
+                    {value.end} {props.suffix}
                 </Text>
             </View>
         </View>
