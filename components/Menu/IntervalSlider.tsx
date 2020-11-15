@@ -41,6 +41,7 @@ export interface Props {
     optionValues: Interval;
     onValueChange: (value: Interval) => void;
     values: Interval;
+    prefix: string;
 }
 
 function IntervalSlider(props: Props) {
@@ -75,8 +76,12 @@ function IntervalSlider(props: Props) {
                 trackStyle={styles.track}
             />
             <View style={styles.values}>
-                <Text style={styles.text}>{value.start}</Text>
-                <Text style={styles.text}>{value.end}</Text>
+                <Text style={styles.text}>
+                    {value.start} {props.prefix}
+                </Text>
+                <Text style={styles.text}>
+                    {value.end} {props.prefix}
+                </Text>
             </View>
         </View>
     );

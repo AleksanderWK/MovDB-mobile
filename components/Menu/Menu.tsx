@@ -158,12 +158,14 @@ function Menu() {
                             optionValues={menuOptions.releaseDateInterval}
                             values={menuValues.releaseDateInterval}
                             onValueChange={(value: Interval) => handleValueChange("releaseDateInterval", value)}
+                            prefix={""}
                         />
                         <IntervalSlider
                             label="runtime"
                             optionValues={menuOptions.runtimeInterval}
                             values={menuValues.runtimeInterval}
                             onValueChange={(value: Interval) => handleValueChange("runtimeInterval", value)}
+                            prefix={"min"}
                         />
                     </Content>
                 )}
