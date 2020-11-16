@@ -13,29 +13,29 @@ Mobil-applikasjonen MovDB skaffer brukere informasjon om over 2000 filmer! Gjenn
 Klon repoet ved å skrive: 
 
 ```
-git clone https://gitlab.stud.idi.ntnu.no/it2810-h20/team-23/prosjekt-3.git
+git clone https://gitlab.stud.idi.ntnu.no/aleksawk/prosjekt-4
 ```
 
 #### 4 - Installer og kjør appen:
-2. Åpne en ny terminal
+1. Åpne en ny terminal
 
-3. I prosjektets rotmappe: 
+2. I prosjektets rotmappe: 
     ``` 
     ...\movDB
     ```
     
-4. Installer avhengighetene til appen med: 
+3. Installer avhengighetene til appen med: 
     ``` 
     npm install
     ```
     
-5. Start expo med: 
+4. Start expo med: 
     ``` 
     expo start
     ```
-6. Last ned expo appen på din mobil
+5. Last ned expo appen på din mobil
 
-7. Ta bilde av QR-koden på expo nettsiden (Pass på at mobilen og pcen er på samme nettverk)
+6. Ta bilde av QR-koden på expo nettsiden (Pass på at mobilen og pcen er på samme nettverk)
 
 ## Verktøy og tredjepartskomponenter
 
