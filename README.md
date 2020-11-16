@@ -8,11 +8,47 @@ Mobil-applikasjonen MovDB skaffer brukere informasjon om over 2000 filmer! Gjenn
 
 ## Installering og kjøring
 
+#### 1 - Klon prosjektet
+Åpne en terminal, og naviger til mappen du ønsker å installere prosjektet i.
+Klon repoet ved å skrive: 
 
-## Tredjepartsbiblioteker og komponenter
+```
+git clone https://gitlab.stud.idi.ntnu.no/it2810-h20/team-23/prosjekt-3.git
+```
 
-https://openbase.io/js/@ptomasroos/react-native-multi-slider
+#### 4 - Installer og kjør appen:
+2. Åpne en ny terminal
 
-https://reactnativeexample.com/a-highly-customizable-react-native-popup-dialog/
+3. I prosjektets rotmappe: 
+    ``` 
+    ...\movDB
+    ```
+    
+4. Installer avhengighetene til appen med: 
+    ``` 
+    npm install
+    ```
+    
+5. Start expo med: 
+    ``` 
+    expo start
+    ```
+6. Last ned expo appen på din mobil
 
-https://github.com/ramprasath25/react-native-chips
+7. Ta bilde av QR-koden på expo nettsiden (Pass på at mobilen og pcen er på samme nettverk)
+
+## Verktøy og tredjepartskomponenter
+
+* [React](https://reactjs.org/)
+* [NativeBase]()
+* [Apollo Client](https://www.apollographql.com/docs/react/)
+* [GraphQL](https://graphql.org/)
+* [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
+* [MongoDB](https://www.mongodb.com/)
+* [React-native-multi-slider](https://openbase.io/js/@ptomasroos/react-native-multi-slider)
+* [React-native-popup-dialog](https://reactnativeexample.com/a-highly-customizable-react-native-popup-dialog/)
+* [React-native-chip-input](https://github.com/ramprasath25/react-native-chips)
+
+# Bidragsytere
+
+* **Aleksander** - aleksawk@stud.ntnu.no - Gitlab: [aleksawk](https://gitlab.stud.idi.ntnu.no/aleksawk)
