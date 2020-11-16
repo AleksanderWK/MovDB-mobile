@@ -6,16 +6,16 @@ import Rating from "./Rating";
 
 const styles = StyleSheet.create({
     card: {
-        width: 150,
-        height: 225,
-        marginLeft: 7,
-        marginRight: 7,
+        width: 176,
+        height: 249,
+        marginLeft: 4,
+        marginRight: 4,
         backgroundColor: "#101010",
         borderColor: "#101010"
     },
     poster: {
-        width: 150,
-        height: 225,
+        width: 176,
+        height: 249,
         borderRadius: 4
     }
 });

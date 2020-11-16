@@ -1,7 +1,7 @@
 import {useQuery} from "@apollo/client";
 import {Content} from "native-base";
 import React, {useEffect, useState} from "react";
-import {View, StyleSheet, FlatList, ActivityIndicator, Text} from "react-native";
+import {View, StyleSheet, FlatList, ActivityIndicator, Text, Dimensions} from "react-native";
 import {MENU_VALUES, SEARCH, SORT, SORT_DIRECTION, MOVIES} from "../../queries";
 import Movie from "./Movie";
 import MoviePopup from "./MoviePopup";
@@ -183,6 +183,9 @@ function MovieContainer() {
         );
     };
 
+    const sW = Dimensions.get("window").width;
+    const numCols = parseInt((sW / 184).toFixed(0)); //184 is movie component width + its margin left and right
+
     return (
         <Content style={styles.bg} contentContainerStyle={{flex: 1}}>
             {variables && (
@@ -202,7 +205,7 @@ function MovieContainer() {
                     renderItem={renderItem}
                     extraData={currentPage < pageCount}
                     onEndReached={nextPage}
-                    numColumns={2}
+                    numColumns={numCols}
                     ListFooterComponent={
                         <View style={styles.feedback}>
                             {queryLoading && <ActivityIndicator size="large" color="#d4a600" style={styles.loader} />}
