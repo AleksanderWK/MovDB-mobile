@@ -50,6 +50,7 @@ function Menu() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [menuValues, setMenuValues] = useState<Parameters | null>();
     const [menuOptions, setMenuOptions] = useState<Parameters | null>();
+    const [scrollEnabled, toggleScroll] = useState<boolean>(true);
 
     // Get menu open data from cache, updates when field change in cache
     const {data: menuOpenData} = useQuery(MENU_OPEN);
@@ -139,7 +140,7 @@ function Menu() {
         >
             <Container style={styles.container}>
                 {menuValues && menuOptions && (
-                    <Content style={styles.menuOptionsContainer}>
+                    <Content style={styles.menuOptionsContainer} scrollEnabled={scrollEnabled}>
                         <Selection
                             label="genres"
                             optionValues={menuOptions.genres}
@@ -158,6 +159,7 @@ function Menu() {
                             values={menuValues.releaseDateInterval}
                             onValueChange={(value: Interval) => handleValueChange("releaseDateInterval", value)}
                             feedback={true}
+                            containerScrollEnabled={(value: boolean) => toggleScroll(value)}
                         />
                         <IntervalSlider
                             label="runtime"
@@ -165,6 +167,7 @@ function Menu() {
                             values={menuValues.runtimeInterval}
                             onValueChange={(value: Interval) => handleValueChange("runtimeInterval", value)}
                             suffix={"min"}
+                            containerScrollEnabled={(value: boolean) => toggleScroll(value)}
                         />
                     </Content>
                 )}

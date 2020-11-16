@@ -38,6 +38,7 @@ export interface Props {
     values: Interval;
     suffix?: string;
     feedback?: boolean;
+    containerScrollEnabled: (value: boolean) => void;
 }
 
 function IntervalSlider(props: Props) {
@@ -68,7 +69,9 @@ function IntervalSlider(props: Props) {
                         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     }
                 }}
+                onValuesChangeStart={() => props.containerScrollEnabled(false)}
                 onValuesChangeFinish={(value) => {
+                    props.containerScrollEnabled(true);
                     let v: Interval = {start: value[0], end: value[1]};
                     handleChange(v);
                     props.onValueChange(v);
@@ -79,21 +82,14 @@ function IntervalSlider(props: Props) {
                 trackStyle={styles.track}
             />
 
-            {props.suffix !== undefined ? (
-                <View style={styles.values}>
-                    <Text style={styles.text}>
-                        {currentValue.start} {props.suffix}
-                    </Text>
-                    <Text style={styles.text}>
-                        {currentValue.end} {props.suffix}
-                    </Text>
-                </View>
-            ) : (
-                <View style={styles.values}>
-                    <Text style={styles.text}>{currentValue.start}</Text>
-                    <Text style={styles.text}>{currentValue.end}</Text>
-                </View>
-            )}
+            <View style={styles.values}>
+                <Text style={styles.text}>
+                    {currentValue.start} {props.suffix !== undefined ? props.suffix : ""}
+                </Text>
+                <Text style={styles.text}>
+                    {currentValue.end} {props.suffix !== undefined ? props.suffix : ""}
+                </Text>
+            </View>
         </View>
     );
 }
