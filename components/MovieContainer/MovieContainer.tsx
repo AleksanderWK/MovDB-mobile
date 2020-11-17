@@ -184,7 +184,7 @@ function MovieContainer() {
     };
 
     const sW = Dimensions.get("window").width;
-    const numCols = parseInt((sW / 184).toFixed(0)); //184 is movie component width + its margin left and right
+    const numCols = Math.floor(sW / 184); //184 is movie component width + its margin left and right
 
     return (
         <Content style={styles.bg} contentContainerStyle={{flex: 1}}>
