@@ -50,11 +50,11 @@ function Navbar() {
                             toggleSort(!sortVisible);
                         }}
                     >
-                        <Icon name="funnel" style={styles.icon} />
+                        <Icon name="options" style={styles.icon} />
                         <Text style={styles.text}>Sort</Text>
                     </Button>
                     <Button vertical onPress={toggleMenu}>
-                        <Icon name="options" style={styles.icon} />
+                        <Icon name="ios-color-filter" style={styles.icon} />
                         <Text style={styles.text}>Filter</Text>
                     </Button>
                 </FooterTab>
